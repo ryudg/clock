@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sunflower:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styl.css" />
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="digital-clock">
+        <div class="mode">
+          <button class="darkmode-btn">
+            <i class="fa-regular fa-moon"></i>
+          </button>
+          <button class="light-btn">
+            <i class="fa-regular fa-sun"></i>
+          </button>
+        </div>
+        <div class="switch-box">
+          <div class="format-switch-btn" data-format="12" =""></div>
+        </div>
+        <div class="time">
+          <span class="hours">00</span>
+          <span class="dots">:</span>
+          <span class="minutes">00</span>
+          <div class="right-side">
+            <span class="period">AM/PM</span>
+            <span class="seconds">00</span>
+          </div>
+        </div>
+        <div class="calendar">
+          <span class="year">Year</span>
+          <span class="korean">년</span>
+          <span class="month-name">Monthr</span>
+          <span class="korean">월</span>
+          <span class="day-number">00</span>
+          <span class="korean">일</span>
+          <span class="day-name">Day</span>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script>
+    const formatSwitchBtn = document.querySelector(".format-switch-btn");
+
+    formatSwitchBtn.addEventListener("click", () => {
+      formatSwitchBtn.classList.toggle("active");
+
+      var formatValue = formatSwitchBtn.getAttribute("data-format");
+
+      if (formatValue === "12") {
+        formatSwitchBtn.setAttribute("data-format", "24");
+      } else {
+        formatSwitchBtn.setAttribute("data-format", "12");
+      }
+    });
+
+    function clock() {
+      var today = new Date();
+
+      var hours = today.getHours();
+      var minutes = today.getMinutes();
+      var seconds = today.getSeconds();
+      let period = "AM";
+
+      if (hours >= 12) {
+        period = "PM";
+      }
+
+      var formatValue = formatSwitchBtn.getAttribute("data-format");
+
+      if (formatValue === "12") {
+        hours = hours > 12 ? hours % 12 : hours;
+      }
+      if (formatValue === "24") {
+      }
+      if (hours < 10) {
+        hours = "0" + hours;
+      }
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      if (seconds < 10) {
+        seconds = "0" + seconds;
+      }
+
+      document.querySelector(".hours").innerHTML = hours;
+      document.querySelector(".minutes").innerHTML = minutes;
+      document.querySelector(".seconds").innerHTML = seconds;
+      document.querySelector(".period").innerHTML = period;
+    }
+
+    var updateClock = setInterval(clock, 1000);
+
+    var today = new Date();
+
+    const year = today.getFullYear();
+    const monthName = today.getMonth() + 1;
+    const dayNumber = today.getDate();
+    const dayName = today.toLocaleString("default", { weekday: "long" });
+
+    if (monthName < 10) {
+      monthName = "0" + monthName;
+    }
+    if (dayNumber < 10) {
+      dayNumber = "0" + dayNumber;
+    }
+
+    document.querySelector(".year").innerHTML = year;
+    document.querySelector(".month-name").innerHTML = monthName;
+    document.querySelector(".day-number").innerHTML = dayNumber;
+    document.querySelector(".day-name").innerHTML = dayName;
+
+    const clockColor = document.querySelector(".digital-clock");
+    const darktMode = document.querySelector(".darkmode-btn");
+    const lightMode = document.querySelector(".light-btn ");
+    darktMode.addEventListener("click", () => {
+      clockColor.style.color = "white";
+      clockColor.style.backgroundColor = "black";
+      clockColor.style.borderColor = "white";
+      darktMode.style.color = "white";
+      darktMode.classList.toggle("hidden");
+      lightMode.classList.toggle("view");
+    });
+    lightMode.addEventListener("click", () => {
+      clockColor.style.color = "black";
+      clockColor.style.backgroundColor = "white";
+      clockColor.style.borderColor = "black";
+      darktMode.style.color = "black";
+      darktMode.classList.toggle("hidden");
+      lightMode.classList.toggle("view");
+    });
+  </script>
+  <script
+    src="https://kit.fontawesome.com/67eff22c15.js"
+    crossorigin="anonymous"
+  ></script>
+</html>
